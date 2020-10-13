@@ -47,7 +47,7 @@ The offset in the center of rotation in units of number of detector channels fro
 
  * ``roi_radius``: [Default=None] Scalar value of radius of reconstruction in ALU. If ``None``, automatically set by calling ``svmbir.auto_roi_radius``.
  
-The angle=0 corresponds to integration along the $x$ coordinate, i.e., along rows of the reconstruction. Pixels outside the radius ``roi_radius`` in the $(x,y)$ plane are disregarded in forward projection. The automatically set size of ``roi_radius`` is choosen so that it inscribes the largest axis of the recon image with a shape ``[num_slices,num_row,num_col]``.
+The ``angle=0`` corresponds to integration along the along rows while ``angle=pi/2`` corresponds to the integration along the columns of the reconstruction image. The image defaults to a size large enough to include the entire detector array. Pixels outside the radius ``roi_radius`` in the row-column-plane are disregarded in initialization, reconstruction and projection. The automatically set size of ``roi_radius`` is choosen so that it inscribes the largest axis of the recon image with a shape ``[num_slices,num_row,num_col]``.
 
 **Additional Parameters:**
 
