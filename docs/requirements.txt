@@ -12,3 +12,4 @@ jupyter
 py2jn
 pypandoc
 numpy
+ruamel.yaml
