@@ -10,7 +10,7 @@ Welcome to svmbir's documentation!
    :maxdepth: 4
 
    svmbir
-
+   algorithm
 
 
 Indices and tables
