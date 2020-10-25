@@ -1,0 +1,775 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>svmbir._svmbir &mdash; svmbir 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #4f8fb8ff" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> svmbir
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../install.html#installing-from-conda">Installing from Conda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../install.html#updating-the-installation">Updating the installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../install.html#build-from-source">Build from Source</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../install.html#download-software">1. Download Software</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../install.html#optional-create-conda-environment">2. (Optional) Create Conda Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../install.html#compile-code">3. Compile Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../install.html#install-the-python-package">4. Install the Python Package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../svmbir.html">The svmbir API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../svmbir.html#module-svmbir._svmbir">svmbir</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../credits.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../credits.html#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">svmbir</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>svmbir._svmbir</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for svmbir._svmbir</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+
+<span class="kn">from</span> <span class="nn">._utils</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">__exec_path__</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;sv-mbirct&#39;</span><span class="p">,</span> <span class="s1">&#39;bin&#39;</span><span class="p">,</span> <span class="s1">&#39;mbir_ct&#39;</span><span class="p">))</span>
+
+<span class="n">__svmbir_lib_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;HOME&#39;</span><span class="p">),</span> <span class="s1">&#39;.cache&#39;</span><span class="p">,</span> <span class="s1">&#39;svmbir_lib&#39;</span><span class="p">)</span>
+
+<span class="n">__namelen_sysmatrix</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="n">_default_reconparams</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;prior_model&#39;</span><span class="p">:</span> <span class="s1">&#39;QGGMRF&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;init_image_value&#39;</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">,</span>
+    <span class="s1">&#39;p&#39;</span><span class="p">:</span> <span class="mf">1.2</span><span class="p">,</span>
+    <span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>
+    <span class="s1">&#39;T&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="s1">&#39;sigma_x&#39;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
+    <span class="s1">&#39;sigma_y&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;b_nearest&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="s1">&#39;b_diag&#39;</span><span class="p">:</span> <span class="mf">0.707</span><span class="p">,</span>
+    <span class="s1">&#39;b_interslice&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="s1">&#39;stop_threshold&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="s1">&#39;max_iterations&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="s1">&#39;positivity&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;weight_type&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span> <span class="c1"># constant weights</span>
+
+<span class="n">_map_pyconv2camelcase</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;prior_model&#39;</span><span class="p">:</span> <span class="s1">&#39;PriorModel&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;init_image_value&#39;</span><span class="p">:</span> <span class="s1">&#39;InitImageValue&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;p&#39;</span><span class="p">:</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="s1">&#39;q&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;T&#39;</span><span class="p">:</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sigma_x&#39;</span><span class="p">:</span> <span class="s1">&#39;SigmaX&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sigma_y&#39;</span><span class="p">:</span> <span class="s1">&#39;SigmaY&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;b_nearest&#39;</span><span class="p">:</span> <span class="s1">&#39;b_nearest&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;b_diag&#39;</span><span class="p">:</span> <span class="s1">&#39;b_diag&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;b_interslice&#39;</span><span class="p">:</span> <span class="s1">&#39;b_interslice&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;stop_threshold&#39;</span><span class="p">:</span> <span class="s1">&#39;StopThreshold&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;max_iterations&#39;</span><span class="p">:</span> <span class="s1">&#39;MaxIterations&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;positivity&#39;</span><span class="p">:</span> <span class="s1">&#39;Positivity&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;weight_type&#39;</span><span class="p">:</span> <span class="s1">&#39;weightType&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;geometry&#39;</span><span class="p">:</span> <span class="s1">&#39;Geometry&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;num_channels&#39;</span><span class="p">:</span> <span class="s1">&#39;NChannels&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;num_views&#39;</span><span class="p">:</span> <span class="s1">&#39;NViews&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;num_slices&#39;</span><span class="p">:</span> <span class="s1">&#39;NSlices&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;delta_channel&#39;</span><span class="p">:</span> <span class="s1">&#39;DeltaChannel&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;center_offset&#39;</span><span class="p">:</span> <span class="s1">&#39;CenterOffset&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;delta_slice&#39;</span><span class="p">:</span> <span class="s1">&#39;DeltaSlice&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;first_slice_number&#39;</span><span class="p">:</span> <span class="s1">&#39;FirstSliceNumber&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;view_angle_list&#39;</span><span class="p">:</span> <span class="s1">&#39;ViewAngleList&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;delta_xy&#39;</span><span class="p">:</span><span class="s1">&#39;Deltaxy&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;delta_z&#39;</span><span class="p">:</span><span class="s1">&#39;DeltaZ&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;roi_radius&#39;</span><span class="p">:</span><span class="s1">&#39;ROIRadius&#39;</span><span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">_clear_cache</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="o">=</span><span class="n">__svmbir_lib_path</span><span class="p">):</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_gen_paths</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="o">=</span><span class="n">__svmbir_lib_path</span><span class="p">,</span> <span class="n">object_name</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">,</span> <span class="n">sysmatrix_name</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">):</span>
+
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;obj&#39;</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;sino&#39;</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;weight&#39;</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;recon&#39;</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;init&#39;</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;proj&#39;</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;init_proj&#39;</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;prox&#39;</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;sysmatrix&#39;</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;par&#39;</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">paths</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;sino_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;sino&#39;</span><span class="p">,</span><span class="n">object_name</span><span class="p">)</span>
+    <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;wght_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;weight&#39;</span><span class="p">,</span><span class="n">object_name</span><span class="p">)</span>
+    <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;recon_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;recon&#39;</span><span class="p">,</span><span class="n">object_name</span><span class="p">)</span>
+    <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;init_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;init&#39;</span><span class="p">,</span><span class="n">object_name</span><span class="p">)</span>
+    <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;proj_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;proj&#39;</span><span class="p">,</span><span class="n">object_name</span><span class="p">)</span>
+    <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;init_proj_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;init_proj&#39;</span><span class="p">,</span><span class="n">object_name</span><span class="p">)</span>
+    <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;prox_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;prox&#39;</span><span class="p">,</span><span class="n">object_name</span><span class="p">)</span>
+    
+    <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;sysmatrix_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;sysmatrix&#39;</span><span class="p">,</span><span class="n">sysmatrix_name</span><span class="p">)</span>
+    
+    <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;param_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span><span class="s1">&#39;par&#39;</span><span class="p">,</span><span class="n">object_name</span><span class="p">)</span>
+    <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;sinoparams_fname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;param_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;.sinoparams&#39;</span>
+    <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;imgparams_fname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;param_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;.imgparams&#39;</span>
+    <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;reconparams_fname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;param_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;.reconparams&#39;</span>
+    <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;view_angle_list_fname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;param_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;.ViewAngleList&#39;</span>
+
+    <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;view_angle_list_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">object_name</span><span class="o">+</span><span class="s1">&#39;.ViewAngleList&#39;</span>
+
+    <span class="k">return</span> <span class="n">paths</span>
+
+
+<span class="k">def</span> <span class="nf">_transform_pyconv2c</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">ckwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">_map_pyconv2camelcase</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">ckwargs</span><span class="p">[</span><span class="n">_map_pyconv2camelcase</span><span class="p">[</span><span class="n">key</span><span class="p">]]</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ckwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">ckwargs</span>
+
+
+<span class="k">def</span> <span class="nf">_hash_params</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="n">relevant_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">relevant_params</span><span class="p">[</span><span class="s1">&#39;Nx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;Nx&#39;</span><span class="p">]</span>
+    <span class="n">relevant_params</span><span class="p">[</span><span class="s1">&#39;Ny&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;Ny&#39;</span><span class="p">]</span>
+    <span class="n">relevant_params</span><span class="p">[</span><span class="s1">&#39;delta_xy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;delta_xy&#39;</span><span class="p">]</span>
+    <span class="n">relevant_params</span><span class="p">[</span><span class="s1">&#39;roi_radius&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;roi_radius&#39;</span><span class="p">]</span>
+    <span class="n">relevant_params</span><span class="p">[</span><span class="s1">&#39;num_channels&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;num_channels&#39;</span><span class="p">]</span>
+    <span class="n">relevant_params</span><span class="p">[</span><span class="s1">&#39;num_views&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;num_views&#39;</span><span class="p">]</span>
+    <span class="n">relevant_params</span><span class="p">[</span><span class="s1">&#39;delta_channel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;delta_channel&#39;</span><span class="p">]</span>
+    <span class="n">relevant_params</span><span class="p">[</span><span class="s1">&#39;center_offset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;center_offset&#39;</span><span class="p">]</span>
+
+    <span class="n">hash_input</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">relevant_params</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span> <span class="p">)</span>
+
+    <span class="n">hash_val</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">(</span><span class="n">hash_input</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">hash_val</span><span class="p">,</span> <span class="n">relevant_params</span>
+
+
+<span class="k">def</span> <span class="nf">_cmd_exec</span><span class="p">(</span><span class="n">exec_path</span><span class="o">=</span><span class="n">__exec_path__</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="n">arg_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">exec_path</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="n">arg_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="n">key</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">arg_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">arg_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="c1"># print(arg_list)</span>
+    <span class="c1"># os.environ[&#39;OMP_NUM_THREADS&#39;] = &#39;20&#39;</span>
+    <span class="c1"># os.environ[&#39;OMP_DYNAMIC&#39;] = &#39;true&#39;</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">arg_list</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_gen_sysmatrix</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">sysmatrix_name</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">sysmatrix_name</span><span class="o">+</span><span class="s1">&#39;.2Dsvmatrix&#39;</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Found system matrix: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sysmatrix_name</span><span class="o">+</span><span class="s1">&#39;.2Dsvmatrix&#39;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">_cmd_exec</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">param_name</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="n">param_name</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">sysmatrix_name</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_init_geometry</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">,</span> <span class="n">num_views</span><span class="p">,</span> <span class="n">num_slices</span><span class="p">,</span> <span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">,</span>
+    <span class="n">delta_channel</span><span class="p">,</span> <span class="n">delta_pixel</span><span class="p">,</span> <span class="n">roi_radius</span><span class="p">,</span> <span class="n">center_offset</span><span class="p">,</span> 
+    <span class="n">svmbir_lib_path</span><span class="o">=</span><span class="n">__svmbir_lib_path</span><span class="p">,</span> <span class="n">object_name</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">):</span>
+
+    <span class="n">sinoparams</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">=</span> <span class="s1">&#39;3DPARALLEL&#39;</span>
+    <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;num_channels&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_channels</span>
+    <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;num_views&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_views</span>
+    <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;num_slices&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_slices</span>
+    <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;delta_channel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">delta_channel</span>
+    <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;center_offset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">center_offset</span>
+    <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;delta_slice&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;first_slice_number&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;view_angle_list&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">object_name</span><span class="o">+</span><span class="s1">&#39;.ViewAngleList&#39;</span>
+
+    <span class="n">imgparams</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">imgparams</span><span class="p">[</span><span class="s1">&#39;Nx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_rows</span>
+    <span class="n">imgparams</span><span class="p">[</span><span class="s1">&#39;Ny&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">num_cols</span>
+    <span class="n">imgparams</span><span class="p">[</span><span class="s1">&#39;Nz&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">num_slices</span>
+    <span class="n">imgparams</span><span class="p">[</span><span class="s1">&#39;first_slice_number&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">imgparams</span><span class="p">[</span><span class="s1">&#39;delta_xy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">delta_pixel</span>
+    <span class="n">imgparams</span><span class="p">[</span><span class="s1">&#39;delta_z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">imgparams</span><span class="p">[</span><span class="s1">&#39;roi_radius&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">roi_radius</span>
+
+    <span class="n">hash_val</span><span class="p">,</span> <span class="n">relevant_params</span> <span class="o">=</span> <span class="n">_hash_params</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="o">**</span><span class="n">sinoparams</span><span class="p">,</span> <span class="o">**</span><span class="n">imgparams</span><span class="p">})</span>
+
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">_gen_paths</span><span class="p">(</span><span class="n">svmbir_lib_path</span><span class="p">,</span> <span class="n">object_name</span><span class="o">=</span><span class="n">object_name</span><span class="p">,</span> <span class="n">sysmatrix_name</span><span class="o">=</span><span class="n">hash_val</span><span class="p">[:</span><span class="n">__namelen_sysmatrix</span><span class="p">])</span>
+    <span class="n">sinoparams_c</span><span class="o">=</span><span class="n">_transform_pyconv2c</span><span class="p">(</span><span class="o">**</span><span class="n">sinoparams</span><span class="p">)</span>
+    <span class="n">imgparams_c</span><span class="o">=</span><span class="n">_transform_pyconv2c</span><span class="p">(</span><span class="o">**</span><span class="n">imgparams</span><span class="p">)</span>
+
+    <span class="n">write_params</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;sinoparams_fname&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">sinoparams_c</span><span class="p">)</span>
+    <span class="n">write_params</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;imgparams_fname&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">imgparams_c</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;view_angle_list_fname&#39;</span><span class="p">],</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fileID</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">angles</span><span class="p">):</span>
+            <span class="n">fileID</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">_gen_sysmatrix</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;param_name&#39;</span><span class="p">],</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;sysmatrix_name&#39;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">paths</span><span class="p">,</span> <span class="n">sinoparams</span><span class="p">,</span> <span class="n">imgparams</span>
+
+
+<div class="viewcode-block" id="calc_weights"><a class="viewcode-back" href="../../svmbir.html#svmbir._svmbir.calc_weights">[docs]</a><span class="k">def</span> <span class="nf">calc_weights</span><span class="p">(</span><span class="n">sino</span><span class="p">,</span> <span class="n">weight_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes the weights used in reconstruction.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        sino (ndarray): 3D numpy array of sinogram data with shape (num_views,num_slices,num_channels)</span>
+<span class="sd">        weight_type (string):[Default=0] Type of noise model used for data.</span>
+
+<span class="sd">            If weight_type=&quot;unweighted&quot;        =&gt; weights = numpy.ones_like(sino)</span>
+
+<span class="sd">            If weight_type=&quot;transmission&quot;      =&gt; weights = numpy.exp(-sino)</span>
+
+<span class="sd">            If weight_type=&quot;transmission_root&quot; =&gt; weights = numpy.exp(-sino/2)</span>
+
+<span class="sd">            If weight_type=&quot;emmission&quot;         =&gt; weights = 1/(sino + 0.1)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray: [Default=None] 3D numpy array of weights with same shape as sino. Retrun calculated values of weights parameter.</span>
+<span class="sd">    </span>
+<span class="sd">    Raises:</span>
+<span class="sd">        Exception: Description</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">weight_type</span><span class="o">==</span><span class="s1">&#39;unweighted&#39;</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">sino</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">weight_type</span><span class="o">==</span><span class="s1">&#39;transmission&#39;</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">sino</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">weight_type</span><span class="o">==</span><span class="s1">&#39;transmission_root&#39;</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">sino</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">weight_type</span><span class="o">==</span><span class="s1">&#39;emmission&#39;</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">sino</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;calc_weights: undefined weight_type </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">weight_type</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">weights</span></div>
+
+
+<div class="viewcode-block" id="auto_sigma_y"><a class="viewcode-back" href="../../svmbir.html#svmbir._svmbir.auto_sigma_y">[docs]</a><span class="k">def</span> <span class="nf">auto_sigma_y</span><span class="p">(</span><span class="n">sino</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">snr_db</span><span class="o">=</span><span class="mf">30.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes the automatic value of the regularization parameter ``sigma_y`` for use in MBIR reconstruction. </span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        sino (ndarray):</span>
+<span class="sd">            3D numpy array of sinogram data with shape (num_views,num_slices,num_channels)</span>
+<span class="sd">        weights (ndarray):</span>
+<span class="sd">            3D numpy array of weights with same shape as sino. </span>
+<span class="sd">            The parameters weights should be the same values as used in svmbir reconstruction.</span>
+<span class="sd">        snr_db (float, optional):</span>
+<span class="sd">            [Default=30.0] Scalar value that controls assumed signal-to-noise ratio of the data in dB.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray: Automatic values of regularization parameter.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">signal_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">weights</span> <span class="o">*</span> <span class="n">sino</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+    <span class="n">rel_noise_std</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">snr_db</span><span class="o">/</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">sigma_y</span> <span class="o">=</span> <span class="n">rel_noise_std</span> <span class="o">*</span> <span class="n">signal_rms</span>
+
+    <span class="k">return</span> <span class="n">sigma_y</span></div>
+
+
+<div class="viewcode-block" id="auto_sigma_x"><a class="viewcode-back" href="../../svmbir.html#svmbir._svmbir.auto_sigma_x">[docs]</a><span class="k">def</span> <span class="nf">auto_sigma_x</span><span class="p">(</span><span class="n">sino</span><span class="p">,</span> <span class="n">delta_channel</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sharpen</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes the automatic value of the regularization parameters sigma_x for use in MBIR reconstruction.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        sino (ndarray):</span>
+<span class="sd">            3D numpy array of sinogram data with shape (num_views,num_slices,num_channels)</span>
+<span class="sd">        delta_channel (float, optional):</span>
+<span class="sd">            [Default=1.0] Scalar value of detector channel spacing in :math:`ALU`.</span>
+<span class="sd">        sharpen (float, optional):</span>
+<span class="sd">            [Default=1.0] Scalar value that controls level of sharpening. </span>
+<span class="sd">            Large value results in sharper or less regularized reconstruction.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Automatic value of regularization parameter.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="p">(</span><span class="n">num_views</span><span class="p">,</span> <span class="n">num_slices</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">)</span> <span class="o">=</span> <span class="n">sino</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">sigma_x</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">sharpen</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sino</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">num_channels</span><span class="o">*</span><span class="n">delta_channel</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">sigma_x</span></div>
+
+
+<div class="viewcode-block" id="recon"><a class="viewcode-back" href="../../svmbir.html#svmbir._svmbir.recon">[docs]</a><span class="k">def</span> <span class="nf">recon</span><span class="p">(</span><span class="n">sino</span><span class="p">,</span> <span class="n">angles</span><span class="p">,</span>
+        <span class="n">center_offset</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">delta_channel</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">delta_pixel</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">num_rows</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">roi_radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">sigma_y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">snr_db</span><span class="o">=</span><span class="mf">30.0</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">weight_type</span><span class="o">=</span><span class="s1">&#39;unweighted&#39;</span><span class="p">,</span>
+        <span class="n">sigma_x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sharpen</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">positivity</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">b_interslice</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> 
+        <span class="n">init_image</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span> <span class="n">init_proj</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">prox_image</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">stop_threshold</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">max_iterations</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+        <span class="n">num_threads</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delete_temps</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">svmbir_lib_path</span><span class="o">=</span><span class="n">__svmbir_lib_path</span><span class="p">,</span> <span class="n">object_name</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the 3D MBIR reconstruction using a parallel beam geometry and other parameters as described below.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        sino (float): 3D numpy array of sinogram data with shape (num_views,num_slices,num_channels)</span>
+
+<span class="sd">        angles (float): 1D numpy array of view angles in radians. </span>
+
+<span class="sd">        center_offset (float, optional): [Default=0.0] Scalar value of offset from center-of-rotation.</span>
+
+<span class="sd">        delta_channel (float, optional): [Default=1.0] Scalar value of detector channel spacing in :math:`ALU`.</span>
+
+<span class="sd">        delta_pixel (float, optional): [Default=1.0] Scalar value of the spacing between image pixels in the 2D slice plane in :math:`ALU`.</span>
+<span class="sd">        </span>
+<span class="sd">        num_rows (int, optional): [Default=None] Integer number of rows in reconstructed image. </span>
+<span class="sd">            If None, automatically set.</span>
+<span class="sd">        </span>
+<span class="sd">        num_cols (int, optional): [Default=None] Integer number of columns in reconstructed image. </span>
+<span class="sd">            If None, automatically set.</span>
+<span class="sd">        </span>
+<span class="sd">        roi_radius (float, optional): [Default=None] Scalar value of radius of reconstruction in :math:`ALU`. </span>
+<span class="sd">            If None, automatically set.</span>
+<span class="sd">        </span>
+<span class="sd">        sigma_y (float, optional): [Default=None] Scalar value of noise standard deviation parameter. </span>
+<span class="sd">            If None, automatically set.</span>
+<span class="sd">        </span>
+<span class="sd">        snr_db (float, optional): [Default=30.0] Scalar value that controls assumed signal-to-noise ratio of the data in dB. </span>
+<span class="sd">            Ignored if sigma_y is not None.</span>
+<span class="sd">        </span>
+<span class="sd">        weights (ndarray, optional): [Default=None] 3D numpy array of weights with same shape as sino</span>
+<span class="sd">        </span>
+<span class="sd">        weight_type (string, optional): [Default=0] Type of noise model used for data. </span>
+
+<span class="sd">            Ignored if weights parameter is supplied. </span>
+
+<span class="sd">            Can be set to the values unweighted, transmission, transmission_root, and emission.</span>
+
+<span class="sd">            If 3D array weights is not supplied, then the parameter weight_type determines the weights used in the forward model according to the following table:</span>
+
+<span class="sd">                If weight_type=&quot;unweighted&quot;        =&gt; weights = numpy.ones_like(sino)</span>
+
+<span class="sd">                If weight_type=&quot;transmission&quot;      =&gt; weights = numpy.exp(-sino)</span>
+
+<span class="sd">                If weight_type=&quot;transmission_root&quot; =&gt; weights = numpy.exp(-sino/2)</span>
+
+<span class="sd">                If weight_type=&quot;emmission&quot;         =&gt; weights = 1/(sino + 0.1)</span>
+
+<span class="sd">            Option &quot;unweighted&quot; provides unweighted reconstruction; Option &quot;transmission&quot; is the correct weighting for transmission CT with constant dosage; Option &quot;transmission_root&quot; is commonly used with transmission CT data to improve image homogeneity; Option &quot;emmission&quot; is appropriate for emission CT data.</span>
+<span class="sd">        </span>
+<span class="sd">        sigma_x (float, optional): [Default=None] Scalar value :math:`&gt;0` that specifies the qGGMRF scale parameter. </span>
+<span class="sd">            If None, automatically set by calling svmbir.auto_sigma_x. The parameter sigma_x can be used to directly control regularization, but this is only recommended for expert users.</span>
+<span class="sd">        </span>
+<span class="sd">        sharpen (float, optional): [Default=1.0] Scalar value that controls level of sharpening. </span>
+
+<span class="sd">            Large value results in sharper or less regularized reconstruction. </span>
+
+<span class="sd">            Ignored if sigma_x is not None. The parameter sharpen can be used to control the level of regularization of the reconstructed image. </span>
+
+<span class="sd">            Large values of sharpen will result in a less regularized or sharper image and smaller values will result in a more regularized or smoother image.</span>
+<span class="sd">        </span>
+<span class="sd">        positivity (bool, optional): [Default=True] Boolean value that determines if positivity constraint is enforced. The positivity parameter defaults to True; however, it should be changed to False when used in applications that can generate negative image values. </span>
+<span class="sd">        </span>
+<span class="sd">        p (float, optional): [Default=1.2] Scalar value :math:`&gt;1` that specifies the qGGMRF shape parameter.</span>
+<span class="sd">        </span>
+<span class="sd">        q (float, optional): [Default=2.0] Scalar value :math:`&gt;p` that specifies the qGGMRF shape parameter.</span>
+<span class="sd">        </span>
+<span class="sd">        T (float, optional): [Default=1.0] Scalar value :math:`&gt;0` that specifies the qGGMRF threshold parameter.</span>
+<span class="sd">        </span>
+<span class="sd">        b_interslice (float, optional): [Default=1.0] Scalar value :math:`&gt;0` that specifies the interslice regularization. </span>
+<span class="sd">            The default values of 1 should be fine for most applications. </span>
+<span class="sd">            However, b_interslice can be increased to values :math:`&gt;1` in order to increase regularization along the slice axis.</span>
+<span class="sd">        </span>
+<span class="sd">        init_image (float, optional): [Default=0.0001] Initial value of reconstruction image specified by either a single scalar value or a 3D numpy array with a shape of (shape.sino[1],num_row,num_col)</span>
+<span class="sd">        </span>
+<span class="sd">        init_proj (None, optional): [Default=None] Initial value of forward projection of the init_image. </span>
+<span class="sd">            This can be used to reduce computation for the first iteration when using the proximal map option.</span>
+<span class="sd">        </span>
+<span class="sd">        prox_image (ndarray, optional): [Default=None] 3D numpy array with proximal map input image. </span>
+
+<span class="sd">            If prox_image is supplied, then the proximal map prior model is used, and the qGGMRF parameters are ignored. </span>
+
+<span class="sd">            The proximal map prior is required when svmbir.recon is used with Plug-and-Play. </span>
+
+<span class="sd">            In this case, the reconstruction solves the optimization problem: </span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                :nowrap:</span>
+
+<span class="sd">                \\begin{align*}</span>
+<span class="sd">                {\\hat x} = \\underset{x}{\\operatorname{argmin}}   \\frac{1}{2} \\vert \\vert y - Ax \\vert \\vert_{\\Lambda}^2 + \\frac{1}{2\\sigma_x^2} \\vert \\vert x -v \\vert \\vert^2 </span>
+<span class="sd">                \\end{align*}</span>
+
+<span class="sd">            where :math:`v` is given by prox_image. This feature should only be used by expert users </span>
+
+<span class="sd">            since svmbir must be incorporated in a Plug-and-Play outter loop in order to make the option useful.</span>
+<span class="sd">        </span>
+<span class="sd">        stop_threshold (float, optional): [Default=0.0] Scalar valued stopping threshold in percent. </span>
+<span class="sd">            If stop_threshold=0, then run max iterations.</span>
+<span class="sd">        </span>
+<span class="sd">        max_iterations (int, optional): [Default=20] Integer valued specifying the maximum number of iterations.</span>
+<span class="sd">        </span>
+<span class="sd">        num_threads (int, optional): [Default=1] Number of compute threads requested when executed.</span>
+<span class="sd">        </span>
+<span class="sd">        delete_temps (bool, optional): [Default=True] Delete temporary files used in computation.</span>
+<span class="sd">        </span>
+<span class="sd">        svmbir_lib_path (string, optional): [Default=~/.cache/svmbir_lib] Path to directory containing library of forward projection matrices.</span>
+<span class="sd">        </span>
+<span class="sd">        object_name (string, optional): [Default=&#39;object&#39;] Specifies filenames of cached files. </span>
+<span class="sd">            Can be changed suitably for running multiple instances of reconstructions.</span>
+<span class="sd">            Useful for building multi-process and multi-node functionality on top of svmbir.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray: 3D numpy array with shape (num_slices,num_rows,num_cols) containing the reconstructed 3D object in units of :math:`ALU^{-1}`. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;OMP_NUM_THREADS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">num_threads</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;OMP_DYNAMIC&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span>
+
+    <span class="p">(</span><span class="n">num_views</span><span class="p">,</span> <span class="n">num_slices</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">)</span> <span class="o">=</span> <span class="n">sino</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="k">if</span> <span class="n">num_rows</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">num_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">num_channels</span><span class="o">*</span><span class="n">delta_channel</span><span class="o">/</span><span class="n">delta_pixel</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">num_cols</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">num_cols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">num_channels</span><span class="o">*</span><span class="n">delta_channel</span><span class="o">/</span><span class="n">delta_pixel</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">roi_radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">roi_radius</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">delta_pixel</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">num_rows</span><span class="p">,</span><span class="n">num_cols</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">calc_weights</span><span class="p">(</span><span class="n">sino</span><span class="p">,</span> <span class="n">weight_type</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">sigma_y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">sigma_y</span> <span class="o">=</span> <span class="n">auto_sigma_y</span><span class="p">(</span><span class="n">sino</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">snr_db</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">sigma_x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">sigma_x</span> <span class="o">=</span> <span class="n">auto_sigma_x</span><span class="p">(</span><span class="n">sino</span><span class="p">,</span> <span class="n">delta_channel</span><span class="p">,</span> <span class="n">sharpen</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">init_image</span><span class="p">):</span>
+        <span class="n">init_image</span> <span class="o">=</span> <span class="n">init_image</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">num_slices</span><span class="p">,</span> <span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">))</span>
+
+
+    <span class="n">paths</span><span class="p">,</span> <span class="n">sinoparams</span><span class="p">,</span> <span class="n">imgparams</span> <span class="o">=</span> <span class="n">_init_geometry</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">center_offset</span><span class="o">=</span><span class="n">center_offset</span><span class="p">,</span>
+        <span class="n">num_channels</span><span class="o">=</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">num_views</span><span class="o">=</span><span class="n">num_views</span><span class="p">,</span> <span class="n">num_slices</span><span class="o">=</span><span class="n">num_slices</span><span class="p">,</span> 
+        <span class="n">num_rows</span><span class="o">=</span><span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span><span class="o">=</span><span class="n">num_cols</span><span class="p">,</span> 
+        <span class="n">delta_channel</span><span class="o">=</span><span class="n">delta_channel</span><span class="p">,</span> <span class="n">delta_pixel</span><span class="o">=</span><span class="n">delta_pixel</span><span class="p">,</span> <span class="n">roi_radius</span><span class="o">=</span><span class="n">roi_radius</span><span class="p">,</span>
+        <span class="n">svmbir_lib_path</span><span class="o">=</span><span class="n">svmbir_lib_path</span><span class="p">,</span> <span class="n">object_name</span><span class="o">=</span><span class="n">object_name</span><span class="p">)</span>
+
+    <span class="n">reconparams</span> <span class="o">=</span> <span class="n">parse_params</span><span class="p">(</span><span class="n">_default_reconparams</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">sigma_x</span><span class="o">=</span><span class="n">sigma_x</span><span class="p">,</span>
+        <span class="n">b_interslice</span><span class="o">=</span><span class="n">b_interslice</span><span class="p">,</span> <span class="n">stop_threshold</span><span class="o">=</span><span class="n">stop_threshold</span><span class="p">,</span> <span class="n">max_iterations</span><span class="o">=</span><span class="n">max_iterations</span><span class="p">,</span>
+        <span class="n">positivity</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">positivity</span><span class="p">))</span>
+    
+    <span class="n">cmd_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;param_name&#39;</span><span class="p">],</span> <span class="n">j</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;param_name&#39;</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;param_name&#39;</span><span class="p">],</span> 
+    <span class="n">s</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;sino_name&#39;</span><span class="p">],</span> <span class="n">f</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;proj_name&#39;</span><span class="p">],</span> <span class="n">w</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;wght_name&#39;</span><span class="p">],</span>
+    <span class="n">r</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;recon_name&#39;</span><span class="p">],</span>
+    <span class="n">m</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;sysmatrix_name&#39;</span><span class="p">],</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;init_name&#39;</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">init_proj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">write_sino_openmbir</span><span class="p">(</span><span class="n">init_proj</span><span class="p">,</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;init_proj_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dsinodata&#39;</span><span class="p">)</span>
+        <span class="n">cmd_args</span><span class="p">[</span><span class="s1">&#39;e&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;init_proj_name&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">prox_image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">write_recon_openmbir</span><span class="p">(</span><span class="n">prox_image</span><span class="p">,</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;prox_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dimgdata&#39;</span><span class="p">)</span>
+        <span class="n">cmd_args</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;prox_name&#39;</span><span class="p">]</span>
+        <span class="n">reconparams</span><span class="p">[</span><span class="s1">&#39;prior_model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;PandP&#39;</span>
+
+    <span class="n">reconparams_c</span><span class="o">=</span><span class="n">_transform_pyconv2c</span><span class="p">(</span><span class="o">**</span><span class="n">reconparams</span><span class="p">)</span>
+    <span class="n">write_params</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;reconparams_fname&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">reconparams_c</span><span class="p">)</span>
+
+    <span class="n">write_sino_openmbir</span><span class="p">(</span><span class="n">sino</span><span class="p">,</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;sino_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dsinodata&#39;</span><span class="p">)</span>
+    <span class="n">write_sino_openmbir</span><span class="p">(</span><span class="n">weights</span><span class="o">/</span><span class="n">sigma_y</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;wght_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dweightdata&#39;</span><span class="p">)</span>
+    <span class="n">write_recon_openmbir</span><span class="p">(</span><span class="n">init_image</span><span class="p">,</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;init_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dimgdata&#39;</span><span class="p">)</span>
+
+    <span class="n">_cmd_exec</span><span class="p">(</span><span class="o">**</span><span class="n">cmd_args</span><span class="p">)</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">read_recon_openmbir</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;recon_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dimgdata&#39;</span><span class="p">,</span> 
+        <span class="n">imgparams</span><span class="p">[</span><span class="s1">&#39;Nx&#39;</span><span class="p">],</span> <span class="n">imgparams</span><span class="p">[</span><span class="s1">&#39;Ny&#39;</span><span class="p">],</span> <span class="n">imgparams</span><span class="p">[</span><span class="s1">&#39;Nz&#39;</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">delete_temps</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;sinoparams_fname&#39;</span><span class="p">]</span> <span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;imgparams_fname&#39;</span><span class="p">]</span> <span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;reconparams_fname&#39;</span><span class="p">]</span> <span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;view_angle_list_fname&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+        <span class="n">delete_data_openmbir</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;recon_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dimgdata&#39;</span><span class="p">,</span> <span class="n">imgparams</span><span class="p">[</span><span class="s1">&#39;Nz&#39;</span><span class="p">])</span>
+        <span class="n">delete_data_openmbir</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;sino_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dsinodata&#39;</span><span class="p">,</span> <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;num_slices&#39;</span><span class="p">])</span>
+        <span class="n">delete_data_openmbir</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;proj_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dprojection&#39;</span><span class="p">,</span> <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;num_slices&#39;</span><span class="p">])</span>
+        <span class="n">delete_data_openmbir</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;wght_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dweightdata&#39;</span><span class="p">,</span> <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;num_slices&#39;</span><span class="p">])</span>
+        <span class="n">delete_data_openmbir</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;init_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dimgdata&#39;</span><span class="p">,</span> <span class="n">imgparams</span><span class="p">[</span><span class="s1">&#39;Nz&#39;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">init_proj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">delete_data_openmbir</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;init_proj_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dprojection&#39;</span><span class="p">,</span> <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;num_slices&#39;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">prox_image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">delete_data_openmbir</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;prox_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dimgdata&#39;</span><span class="p">,</span> <span class="n">imgparams</span><span class="p">[</span><span class="s1">&#39;Nz&#39;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">x</span></div>
+
+
+<div class="viewcode-block" id="project"><a class="viewcode-back" href="../../svmbir.html#svmbir._svmbir.project">[docs]</a><span class="k">def</span> <span class="nf">project</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">,</span>
+        <span class="n">delta_channel</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">delta_pixel</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">center_offset</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">roi_radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">num_threads</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delete_temps</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">svmbir_lib_path</span><span class="o">=</span><span class="n">__svmbir_lib_path</span><span class="p">,</span> <span class="n">object_name</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes the parallel beam sinogram by forward-projecting a 3D numpy array image that represents the volumetric image. </span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        angles (ndarray):</span>
+<span class="sd">            1D numpy array of view angles in radians. </span>
+<span class="sd">            The 1D array is organized so that angles[k] is the angle in radians for view :math:`k`. </span>
+<span class="sd">        image (ndarray):</span>
+<span class="sd">            3D numpy array of image being forward projected. </span>
+<span class="sd">            The image is a 3D image with a shape of (num_slices,num_row,num_col) where num_slices is the number of sinogram slices. </span>
+<span class="sd">            The image should be 0 outside the ROI as defined by roi_radius.</span>
+<span class="sd">        num_channels (int):</span>
+<span class="sd">            Integer number of sinogram channels.</span>
+<span class="sd">        delta_channel (float, optional):</span>
+<span class="sd">            [Default=1.0] Scalar value of detector channel spacing in :math:`ALU`.</span>
+<span class="sd">        delta_pixel (float, optional):</span>
+<span class="sd">            [Default=1.0] Scalar value of the spacing between image pixels in the 2D slice plane in :math:`ALU`.</span>
+<span class="sd">        center_offset (float, optional):</span>
+<span class="sd">            [Default=0.0] Scalar value of offset from center-of-rotation.</span>
+<span class="sd">        roi_radius (None, optional):</span>
+<span class="sd">            [Default=None] Scalar value of radius of reconstruction in :math:`ALU`. </span>
+<span class="sd">            If None, automatically set by calling svmbir.auto_roi_radius. </span>
+<span class="sd">            Pixels outside the radius roi_radius in the :math:`(x,y)` plane are disregarded in forward projection. </span>
+<span class="sd">            The automatically set size of roi_radius is choosen so that it inscribes the largest axis of the recon image with a shape (num_slices,num_row,num_col).</span>
+<span class="sd">        num_threads (int, optional):</span>
+<span class="sd">            [Default=1] Number of compute threads requested when executed.</span>
+<span class="sd">        delete_temps (bool, optional):</span>
+<span class="sd">            [Default=True] Delete temporary files used in computation.</span>
+<span class="sd">        svmbir_lib_path (string, optional):</span>
+<span class="sd">            [Default=~/.cache/svmbir_lib] String containing path to directory containing library of forward projection matrices and temp file.</span>
+<span class="sd">        object_name (string, optional): </span>
+<span class="sd">            [Default=&#39;object&#39;] Specifies filenames of cached files. </span>
+<span class="sd">            Can be changed suitably for running multiple instances of forward projections.</span>
+<span class="sd">            Useful for building multi-process and multi-node functionality on top of svmbir.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray: 3D numpy array containing sinogram with shape (num_views, num_slices, num_channels).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;OMP_NUM_THREADS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">num_threads</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;OMP_DYNAMIC&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span>
+
+    <span class="n">num_slices</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">num_rows</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">num_cols</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">num_views</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">roi_radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">roi_radius</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">delta_pixel</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">num_rows</span><span class="p">,</span><span class="n">num_cols</span><span class="p">))</span>
+
+    <span class="n">paths</span><span class="p">,</span> <span class="n">sinoparams</span><span class="p">,</span> <span class="n">imgparams</span> <span class="o">=</span> <span class="n">_init_geometry</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">center_offset</span><span class="o">=</span><span class="n">center_offset</span><span class="p">,</span>
+        <span class="n">num_channels</span><span class="o">=</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">num_views</span><span class="o">=</span><span class="n">num_views</span><span class="p">,</span> <span class="n">num_slices</span><span class="o">=</span><span class="n">num_slices</span><span class="p">,</span> 
+        <span class="n">num_rows</span><span class="o">=</span><span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span><span class="o">=</span><span class="n">num_cols</span><span class="p">,</span> 
+        <span class="n">delta_channel</span><span class="o">=</span><span class="n">delta_channel</span><span class="p">,</span> <span class="n">delta_pixel</span><span class="o">=</span><span class="n">delta_pixel</span><span class="p">,</span> <span class="n">roi_radius</span><span class="o">=</span><span class="n">roi_radius</span><span class="p">,</span>
+        <span class="n">svmbir_lib_path</span><span class="o">=</span><span class="n">svmbir_lib_path</span><span class="p">,</span> <span class="n">object_name</span><span class="o">=</span><span class="n">object_name</span><span class="p">)</span>
+
+    <span class="n">write_recon_openmbir</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;recon_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dimgdata&#39;</span><span class="p">)</span>
+
+    <span class="n">_cmd_exec</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;param_name&#39;</span><span class="p">],</span> <span class="n">j</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;param_name&#39;</span><span class="p">],</span> <span class="n">m</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;sysmatrix_name&#39;</span><span class="p">],</span>
+        <span class="n">f</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;proj_name&#39;</span><span class="p">],</span> <span class="n">t</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;recon_name&#39;</span><span class="p">])</span>
+
+    <span class="n">proj</span> <span class="o">=</span> <span class="n">read_sino_openmbir</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;proj_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dprojection&#39;</span><span class="p">,</span> 
+        <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;num_views&#39;</span><span class="p">],</span> <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;num_slices&#39;</span><span class="p">],</span> <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;num_channels&#39;</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">delete_temps</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;sinoparams_fname&#39;</span><span class="p">]</span> <span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;imgparams_fname&#39;</span><span class="p">]</span> <span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="n">paths</span><span class="p">[</span><span class="s1">&#39;view_angle_list_fname&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+        <span class="n">delete_data_openmbir</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;recon_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dimgdata&#39;</span><span class="p">,</span> <span class="n">imgparams</span><span class="p">[</span><span class="s1">&#39;Nz&#39;</span><span class="p">])</span>
+        <span class="n">delete_data_openmbir</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s1">&#39;proj_name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_slice&#39;</span><span class="p">,</span> <span class="s1">&#39;.2Dprojection&#39;</span><span class="p">,</span> <span class="n">sinoparams</span><span class="p">[</span><span class="s1">&#39;num_slices&#39;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">proj</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Soumendu Smajee; Wenrui Li
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

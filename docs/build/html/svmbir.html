@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The svmbir API reference &mdash; svmbir 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Credits" href="credits.html" />
+    <link rel="prev" title="Install directions" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #4f8fb8ff" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> svmbir
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install directions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#installing-from-conda">Installing from Conda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#updating-the-installation">Updating the installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#build-from-source">Build from Source</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#download-software">1. Download Software</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#optional-create-conda-environment">2. (Optional) Create Conda Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#compile-code">3. Compile Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install.html#install-the-python-package">4. Install the Python Package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The svmbir API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-svmbir._svmbir">svmbir</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">svmbir</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>The svmbir API reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/svmbir.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-svmbir-api-reference">
+<h1>The svmbir API reference<a class="headerlink" href="#the-svmbir-api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-svmbir._svmbir">
+<span id="svmbir"></span><h2>svmbir<a class="headerlink" href="#module-svmbir._svmbir" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="svmbir._svmbir.auto_sigma_x">
+<code class="sig-prename descclassname">svmbir._svmbir.</code><code class="sig-name descname">auto_sigma_x</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sino</span></em>, <em class="sig-param"><span class="n">delta_channel</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">sharpen</span><span class="o">=</span><span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/svmbir/_svmbir.html#auto_sigma_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#svmbir._svmbir.auto_sigma_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the automatic value of the regularization parameters sigma_x for use in MBIR reconstruction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sino</strong> (<em>ndarray</em>) – 3D numpy array of sinogram data with shape (num_views,num_slices,num_channels)</p></li>
+<li><p><strong>delta_channel</strong> (<em>float, optional</em>) – [Default=1.0] Scalar value of detector channel spacing in <span class="math notranslate nohighlight">\(ALU\)</span>.</p></li>
+<li><p><strong>sharpen</strong> (<em>float, optional</em>) – [Default=1.0] Scalar value that controls level of sharpening.
+Large value results in sharper or less regularized reconstruction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>float</em> – Automatic value of regularization parameter.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="svmbir._svmbir.auto_sigma_y">
+<code class="sig-prename descclassname">svmbir._svmbir.</code><code class="sig-name descname">auto_sigma_y</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sino</span></em>, <em class="sig-param"><span class="n">weights</span></em>, <em class="sig-param"><span class="n">snr_db</span><span class="o">=</span><span class="default_value">30.0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/svmbir/_svmbir.html#auto_sigma_y"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#svmbir._svmbir.auto_sigma_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the automatic value of the regularization parameter <code class="docutils literal notranslate"><span class="pre">sigma_y</span></code> for use in MBIR reconstruction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sino</strong> (<em>ndarray</em>) – 3D numpy array of sinogram data with shape (num_views,num_slices,num_channels)</p></li>
+<li><p><strong>weights</strong> (<em>ndarray</em>) – 3D numpy array of weights with same shape as sino.
+The parameters weights should be the same values as used in svmbir reconstruction.</p></li>
+<li><p><strong>snr_db</strong> (<em>float, optional</em>) – [Default=30.0] Scalar value that controls assumed signal-to-noise ratio of the data in dB.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>ndarray</em> – Automatic values of regularization parameter.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="svmbir._svmbir.calc_weights">
+<code class="sig-prename descclassname">svmbir._svmbir.</code><code class="sig-name descname">calc_weights</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sino</span></em>, <em class="sig-param"><span class="n">weight_type</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/svmbir/_svmbir.html#calc_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#svmbir._svmbir.calc_weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the weights used in reconstruction.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul>
+<li><p><strong>sino</strong> (<em>ndarray</em>) – 3D numpy array of sinogram data with shape (num_views,num_slices,num_channels)</p></li>
+<li><p><strong>weight_type</strong> (<em>string</em>) – [Default=0] Type of noise model used for data.</p>
+<p>If weight_type=”unweighted”        =&gt; weights = numpy.ones_like(sino)</p>
+<p>If weight_type=”transmission”      =&gt; weights = numpy.exp(-sino)</p>
+<p>If weight_type=”transmission_root” =&gt; weights = numpy.exp(-sino/2)</p>
+<p>If weight_type=”emmission”         =&gt; weights = 1/(sino + 0.1)</p>
+</li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>ndarray</em> – [Default=None] 3D numpy array of weights with same shape as sino. Retrun calculated values of weights parameter.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>Exception</strong> – Description</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="svmbir._svmbir.project">
+<code class="sig-prename descclassname">svmbir._svmbir.</code><code class="sig-name descname">project</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">angles</span></em>, <em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">num_channels</span></em>, <em class="sig-param"><span class="n">delta_channel</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">delta_pixel</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">center_offset</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">roi_radius</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">num_threads</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">delete_temps</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">svmbir_lib_path</span><span class="o">=</span><span class="default_value">'/Users/damonli/.cache/svmbir_lib'</span></em>, <em class="sig-param"><span class="n">object_name</span><span class="o">=</span><span class="default_value">'object'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/svmbir/_svmbir.html#project"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#svmbir._svmbir.project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the parallel beam sinogram by forward-projecting a 3D numpy array image that represents the volumetric image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>angles</strong> (<em>ndarray</em>) – 1D numpy array of view angles in radians.
+The 1D array is organized so that angles[k] is the angle in radians for view <span class="math notranslate nohighlight">\(k\)</span>.</p></li>
+<li><p><strong>image</strong> (<em>ndarray</em>) – 3D numpy array of image being forward projected.
+The image is a 3D image with a shape of (num_slices,num_row,num_col) where num_slices is the number of sinogram slices.
+The image should be 0 outside the ROI as defined by roi_radius.</p></li>
+<li><p><strong>num_channels</strong> (<em>int</em>) – Integer number of sinogram channels.</p></li>
+<li><p><strong>delta_channel</strong> (<em>float, optional</em>) – [Default=1.0] Scalar value of detector channel spacing in <span class="math notranslate nohighlight">\(ALU\)</span>.</p></li>
+<li><p><strong>delta_pixel</strong> (<em>float, optional</em>) – [Default=1.0] Scalar value of the spacing between image pixels in the 2D slice plane in <span class="math notranslate nohighlight">\(ALU\)</span>.</p></li>
+<li><p><strong>center_offset</strong> (<em>float, optional</em>) – [Default=0.0] Scalar value of offset from center-of-rotation.</p></li>
+<li><p><strong>roi_radius</strong> (<em>None, optional</em>) – [Default=None] Scalar value of radius of reconstruction in <span class="math notranslate nohighlight">\(ALU\)</span>.
+If None, automatically set by calling svmbir.auto_roi_radius.
+Pixels outside the radius roi_radius in the <span class="math notranslate nohighlight">\((x,y)\)</span> plane are disregarded in forward projection.
+The automatically set size of roi_radius is choosen so that it inscribes the largest axis of the recon image with a shape (num_slices,num_row,num_col).</p></li>
+<li><p><strong>num_threads</strong> (<em>int, optional</em>) – [Default=1] Number of compute threads requested when executed.</p></li>
+<li><p><strong>delete_temps</strong> (<em>bool, optional</em>) – [Default=True] Delete temporary files used in computation.</p></li>
+<li><p><strong>svmbir_lib_path</strong> (<em>string, optional</em>) – [Default=~/.cache/svmbir_lib] String containing path to directory containing library of forward projection matrices and temp file.</p></li>
+<li><p><strong>object_name</strong> (<em>string, optional</em>) – [Default=’object’] Specifies filenames of cached files.
+Can be changed suitably for running multiple instances of forward projections.
+Useful for building multi-process and multi-node functionality on top of svmbir.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>ndarray</em> – 3D numpy array containing sinogram with shape (num_views, num_slices, num_channels).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="svmbir._svmbir.recon">
+<code class="sig-prename descclassname">svmbir._svmbir.</code><code class="sig-name descname">recon</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sino</span></em>, <em class="sig-param"><span class="n">angles</span></em>, <em class="sig-param"><span class="n">center_offset</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">delta_channel</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">delta_pixel</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">num_rows</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">num_cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">roi_radius</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sigma_y</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">snr_db</span><span class="o">=</span><span class="default_value">30.0</span></em>, <em class="sig-param"><span class="n">weights</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">weight_type</span><span class="o">=</span><span class="default_value">'unweighted'</span></em>, <em class="sig-param"><span class="n">sigma_x</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sharpen</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">positivity</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">p</span><span class="o">=</span><span class="default_value">1.2</span></em>, <em class="sig-param"><span class="n">q</span><span class="o">=</span><span class="default_value">2.0</span></em>, <em class="sig-param"><span class="n">T</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">b_interslice</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">init_image</span><span class="o">=</span><span class="default_value">0.0001</span></em>, <em class="sig-param"><span class="n">init_proj</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">prox_image</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">stop_threshold</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">max_iterations</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">num_threads</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">delete_temps</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">svmbir_lib_path</span><span class="o">=</span><span class="default_value">'/Users/damonli/.cache/svmbir_lib'</span></em>, <em class="sig-param"><span class="n">object_name</span><span class="o">=</span><span class="default_value">'object'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/svmbir/_svmbir.html#recon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#svmbir._svmbir.recon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the 3D MBIR reconstruction using a parallel beam geometry and other parameters as described below.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul>
+<li><p><strong>sino</strong> (<em>float</em>) – 3D numpy array of sinogram data with shape (num_views,num_slices,num_channels)</p></li>
+<li><p><strong>angles</strong> (<em>float</em>) – 1D numpy array of view angles in radians.</p></li>
+<li><p><strong>center_offset</strong> (<em>float, optional</em>) – [Default=0.0] Scalar value of offset from center-of-rotation.</p></li>
+<li><p><strong>delta_channel</strong> (<em>float, optional</em>) – [Default=1.0] Scalar value of detector channel spacing in <span class="math notranslate nohighlight">\(ALU\)</span>.</p></li>
+<li><p><strong>delta_pixel</strong> (<em>float, optional</em>) – [Default=1.0] Scalar value of the spacing between image pixels in the 2D slice plane in <span class="math notranslate nohighlight">\(ALU\)</span>.</p></li>
+<li><p><strong>num_rows</strong> (<em>int, optional</em>) – [Default=None] Integer number of rows in reconstructed image.
+If None, automatically set.</p></li>
+<li><p><strong>num_cols</strong> (<em>int, optional</em>) – [Default=None] Integer number of columns in reconstructed image.
+If None, automatically set.</p></li>
+<li><p><strong>roi_radius</strong> (<em>float, optional</em>) – [Default=None] Scalar value of radius of reconstruction in <span class="math notranslate nohighlight">\(ALU\)</span>.
+If None, automatically set.</p></li>
+<li><p><strong>sigma_y</strong> (<em>float, optional</em>) – [Default=None] Scalar value of noise standard deviation parameter.
+If None, automatically set.</p></li>
+<li><p><strong>snr_db</strong> (<em>float, optional</em>) – [Default=30.0] Scalar value that controls assumed signal-to-noise ratio of the data in dB.
+Ignored if sigma_y is not None.</p></li>
+<li><p><strong>weights</strong> (<em>ndarray, optional</em>) – [Default=None] 3D numpy array of weights with same shape as sino</p></li>
+<li><p><strong>weight_type</strong> (<em>string, optional</em>) – [Default=0] Type of noise model used for data.</p>
+<p>Ignored if weights parameter is supplied.</p>
+<p>Can be set to the values unweighted, transmission, transmission_root, and emission.</p>
+<p>If 3D array weights is not supplied, then the parameter weight_type determines the weights used in the forward model according to the following table:</p>
+<blockquote>
+<div><p>If weight_type=”unweighted”        =&gt; weights = numpy.ones_like(sino)</p>
+<p>If weight_type=”transmission”      =&gt; weights = numpy.exp(-sino)</p>
+<p>If weight_type=”transmission_root” =&gt; weights = numpy.exp(-sino/2)</p>
+<p>If weight_type=”emmission”         =&gt; weights = 1/(sino + 0.1)</p>
+</div></blockquote>
+<p>Option “unweighted” provides unweighted reconstruction; Option “transmission” is the correct weighting for transmission CT with constant dosage; Option “transmission_root” is commonly used with transmission CT data to improve image homogeneity; Option “emmission” is appropriate for emission CT data.</p>
+</li>
+<li><p><strong>sigma_x</strong> (<em>float, optional</em>) – [Default=None] Scalar value <span class="math notranslate nohighlight">\(&gt;0\)</span> that specifies the qGGMRF scale parameter.
+If None, automatically set by calling svmbir.auto_sigma_x. The parameter sigma_x can be used to directly control regularization, but this is only recommended for expert users.</p></li>
+<li><p><strong>sharpen</strong> (<em>float, optional</em>) – [Default=1.0] Scalar value that controls level of sharpening.</p>
+<p>Large value results in sharper or less regularized reconstruction.</p>
+<p>Ignored if sigma_x is not None. The parameter sharpen can be used to control the level of regularization of the reconstructed image.</p>
+<p>Large values of sharpen will result in a less regularized or sharper image and smaller values will result in a more regularized or smoother image.</p>
+</li>
+<li><p><strong>positivity</strong> (<em>bool, optional</em>) – [Default=True] Boolean value that determines if positivity constraint is enforced. The positivity parameter defaults to True; however, it should be changed to False when used in applications that can generate negative image values.</p></li>
+<li><p><strong>p</strong> (<em>float, optional</em>) – [Default=1.2] Scalar value <span class="math notranslate nohighlight">\(&gt;1\)</span> that specifies the qGGMRF shape parameter.</p></li>
+<li><p><strong>q</strong> (<em>float, optional</em>) – [Default=2.0] Scalar value <span class="math notranslate nohighlight">\(&gt;p\)</span> that specifies the qGGMRF shape parameter.</p></li>
+<li><p><strong>T</strong> (<em>float, optional</em>) – [Default=1.0] Scalar value <span class="math notranslate nohighlight">\(&gt;0\)</span> that specifies the qGGMRF threshold parameter.</p></li>
+<li><p><strong>b_interslice</strong> (<em>float, optional</em>) – [Default=1.0] Scalar value <span class="math notranslate nohighlight">\(&gt;0\)</span> that specifies the interslice regularization.
+The default values of 1 should be fine for most applications.
+However, b_interslice can be increased to values <span class="math notranslate nohighlight">\(&gt;1\)</span> in order to increase regularization along the slice axis.</p></li>
+<li><p><strong>init_image</strong> (<em>float, optional</em>) – [Default=0.0001] Initial value of reconstruction image specified by either a single scalar value or a 3D numpy array with a shape of (shape.sino[1],num_row,num_col)</p></li>
+<li><p><strong>init_proj</strong> (<em>None, optional</em>) – [Default=None] Initial value of forward projection of the init_image.
+This can be used to reduce computation for the first iteration when using the proximal map option.</p></li>
+<li><p><strong>prox_image</strong> (<em>ndarray, optional</em>) – [Default=None] 3D numpy array with proximal map input image.</p>
+<p>If prox_image is supplied, then the proximal map prior model is used, and the qGGMRF parameters are ignored.</p>
+<p>The proximal map prior is required when svmbir.recon is used with Plug-and-Play.</p>
+<p>In this case, the reconstruction solves the optimization problem:</p>
+<div class="math notranslate nohighlight">
+\begin{align*}
+{\hat x} = \underset{x}{\operatorname{argmin}}   \frac{1}{2} \vert \vert y - Ax \vert \vert_{\Lambda}^2 + \frac{1}{2\sigma_x^2} \vert \vert x -v \vert \vert^2
+\end{align*}</div><p>where <span class="math notranslate nohighlight">\(v\)</span> is given by prox_image. This feature should only be used by expert users</p>
+<p>since svmbir must be incorporated in a Plug-and-Play outter loop in order to make the option useful.</p>
+</li>
+<li><p><strong>stop_threshold</strong> (<em>float, optional</em>) – [Default=0.0] Scalar valued stopping threshold in percent.
+If stop_threshold=0, then run max iterations.</p></li>
+<li><p><strong>max_iterations</strong> (<em>int, optional</em>) – [Default=20] Integer valued specifying the maximum number of iterations.</p></li>
+<li><p><strong>num_threads</strong> (<em>int, optional</em>) – [Default=1] Number of compute threads requested when executed.</p></li>
+<li><p><strong>delete_temps</strong> (<em>bool, optional</em>) – [Default=True] Delete temporary files used in computation.</p></li>
+<li><p><strong>svmbir_lib_path</strong> (<em>string, optional</em>) – [Default=~/.cache/svmbir_lib] Path to directory containing library of forward projection matrices.</p></li>
+<li><p><strong>object_name</strong> (<em>string, optional</em>) – [Default=’object’] Specifies filenames of cached files.
+Can be changed suitably for running multiple instances of reconstructions.
+Useful for building multi-process and multi-node functionality on top of svmbir.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>ndarray</em> – 3D numpy array with shape (num_slices,num_rows,num_cols) containing the reconstructed 3D object in units of <span class="math notranslate nohighlight">\(ALU^{-1}\)</span>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="credits.html" class="btn btn-neutral float-right" title="Credits" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="install.html" class="btn btn-neutral float-left" title="Install directions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Soumendu Smajee; Wenrui Li
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
