@@ -13,3 +13,4 @@ To reconstruct your own data, use the interface used in ```demo_simple.py``` and
    :hidden:
 
    ipynb/demo_simple
+   ipynb/demo_complex
