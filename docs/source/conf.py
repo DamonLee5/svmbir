@@ -20,11 +20,16 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = 'svmbir'
+<<<<<<< HEAD
 copyright = '2020, Soumendu Smajee; Wenrui Li'
 author = 'Soumendu Majee; Wenrui Li; Sherman Jordan Kisner; Thilo Balke;Greg Buzzard; Charles A. Bouman'
+=======
+copyright = '2020, SVMBIR Development Team'
+author = 'SVMBIR Development Team'
+>>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
 
 # The full version, including alpha/beta/rc tags
-release = '1.0'
+release = '0.9'
 
 
 # -- General configuration ---------------------------------------------------
@@ -42,8 +47,12 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.napoleon',
     'sphinxcontrib.bibtex',
+<<<<<<< HEAD
     'sphinx.ext.viewcode',
     'recommonmark'
+=======
+    'sphinx.ext.viewcode'
+>>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
 ]
 
 exclude_patterns = ['_build', '**.ipynb_checkpoints']
@@ -103,6 +112,10 @@ html_theme_options = {
     'collapse_navigation': False,
 }
 
+<<<<<<< HEAD
+=======
+html_logo = 'svmbir_logo.svg'
+>>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = project + 'doc'

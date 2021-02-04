@@ -3,6 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+<<<<<<< HEAD
 .. include:: ../README.rst
 
 Indices and tables
@@ -23,6 +24,51 @@ Indices and tables
    examples
    svmbir
    credits
+=======
+.. image:: svmbir_logo.svg
+   :width: 320px
+   :alt: svmbir logo
+   :align: center
+>>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
+
+|
+
+.. include:: ../README.rst
+
+<<<<<<< HEAD
+=======
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
 
 
+.. toctree::
+   :hidden:
+   :maxdepth: 4
+   :caption: Background
+
+   overview
+   theory
+   credits
+
+.. toctree::
+   :hidden:
+   :maxdepth: 4
+   :caption: User Guide
+
+   install
+   examples
+   api
+
+.. toctree::
+   :hidden:
+   :maxdepth: 4
+   :caption: Developer Guide
+
+   pytest
+
+>>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
