@@ -414,7 +414,6 @@ def project(angles, image, num_channels,
     if roi_radius is None :
         roi_radius = auto_roi_radius(delta_pixel, num_rows, num_cols)
 
-
     paths, sinoparams, imgparams = ci._init_geometry(angles, center_offset=center_offset,
                                                      num_channels=num_channels, num_views=num_views, num_slices=num_slices,
                                                      num_rows=num_rows, num_cols=num_cols,

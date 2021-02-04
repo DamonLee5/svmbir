@@ -1,7 +1,7 @@
 svmbir
 ------
 .. automodule:: svmbir
-   :members:
+   :members: 
    :undoc-members:
    :show-inheritance:
 

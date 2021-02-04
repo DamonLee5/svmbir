@@ -19,7 +19,7 @@ In order to download the C and python code, move to a directory of your choice a
 
 This first command recursively downloads a folder containing the svmbir python wrapper along with the ``sv-mbirct`` C-code submodule,
 and the second command moves into the root directory of the repository.
-*Warning: Do not* used standard GUI methods to clone the repository because they may not recursively copy the C-code submodule.
+*Warning: Do not* used standard GUI methods to clone the repository because they may not recursively copy the C-code submodule. 
 
 
 2. *Create a Virtual Environment:*
