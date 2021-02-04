@@ -6,182 +6,9 @@ import math
 from psutil import cpu_count
 import shutil
 import numpy as np
-<<<<<<< HEAD
-import subprocess
-import math
-import hashlib
-
-from ._utils import *
-
-__exec_path__ = os.path.realpath(os.path.join(os.path.dirname(__file__), 'sv-mbirct', 'bin', 'mbir_ct'))
-
-__svmbir_lib_path = os.path.join(os.path.expanduser('~'), '.cache', 'svmbir_lib')
-
-__namelen_sysmatrix = 20
-
-_default_reconparams = {'prior_model': 'QGGMRF',
-    'init_image_value': 0.0001,
-    'p': 1.2,
-    'q': 2.0,
-    'T': 1.0,
-    'sigma_x': 0.01,
-    'sigma_y': 1,
-    'b_nearest': 1.0,
-    'b_diag': 0.707,
-    'b_interslice': 1.0,
-    'stop_threshold': 0.0,
-    'max_iterations': 20,
-    'positivity': 1,
-    'weight_type': 'unweighted'} # constant weights
-
-_map_pyconv2camelcase={'prior_model': 'PriorModel',
-    'init_image_value': 'InitImageValue',
-    'p': 'p',
-    'q': 'q',
-    'T': 'T',
-    'sigma_x': 'SigmaX',
-    'sigma_y': 'SigmaY',
-    'b_nearest': 'b_nearest',
-    'b_diag': 'b_diag',
-    'b_interslice': 'b_interslice',
-    'stop_threshold': 'StopThreshold',
-    'max_iterations': 'MaxIterations',
-    'positivity': 'Positivity',
-    'weight_type': 'weightType',
-    'geometry': 'Geometry',
-    'num_channels': 'NChannels',
-    'num_views': 'NViews',
-    'num_slices': 'NSlices',
-    'delta_channel': 'DeltaChannel',
-    'center_offset': 'CenterOffset',
-    'delta_slice': 'DeltaSlice',
-    'first_slice_number': 'FirstSliceNumber',
-    'view_angle_list': 'ViewAngleList',
-    'delta_xy':'Deltaxy',
-    'delta_z':'DeltaZ',
-    'roi_radius':'ROIRadius'}
-
-
-def _clear_cache(svmbir_lib_path=__svmbir_lib_path):
-    shutil.rmtree(svmbir_lib_path)
-
-
-def _gen_paths(svmbir_lib_path=__svmbir_lib_path, object_name='object', sysmatrix_name='object'):
-
-    os.makedirs( os.path.join(svmbir_lib_path,'obj'), exist_ok=True)
-    os.makedirs( os.path.join(svmbir_lib_path,'sino'), exist_ok=True)
-    os.makedirs( os.path.join(svmbir_lib_path,'weight'), exist_ok=True)
-    os.makedirs( os.path.join(svmbir_lib_path,'recon'), exist_ok=True)
-    os.makedirs( os.path.join(svmbir_lib_path,'init'), exist_ok=True)
-    os.makedirs( os.path.join(svmbir_lib_path,'proj'), exist_ok=True)
-    os.makedirs( os.path.join(svmbir_lib_path,'init_proj'), exist_ok=True)
-    os.makedirs( os.path.join(svmbir_lib_path,'prox'), exist_ok=True)
-    os.makedirs( os.path.join(svmbir_lib_path,'sysmatrix'), exist_ok=True)
-    os.makedirs( os.path.join(svmbir_lib_path,'par'), exist_ok=True)
-
-    paths = dict()
-    paths['sino_name'] = os.path.join(svmbir_lib_path,'sino',object_name)
-    paths['wght_name'] = os.path.join(svmbir_lib_path,'weight',object_name)
-    paths['recon_name'] = os.path.join(svmbir_lib_path,'recon',object_name)
-    paths['init_name'] = os.path.join(svmbir_lib_path,'init',object_name)
-    paths['proj_name'] = os.path.join(svmbir_lib_path,'proj',object_name)
-    paths['init_proj_name'] = os.path.join(svmbir_lib_path,'init_proj',object_name)
-    paths['prox_name'] = os.path.join(svmbir_lib_path,'prox',object_name)
-    
-    paths['sysmatrix_name'] = os.path.join(svmbir_lib_path,'sysmatrix',sysmatrix_name)
-    
-    paths['param_name'] = os.path.join(svmbir_lib_path,'par',object_name)
-    paths['sinoparams_fname'] = paths['param_name']+'.sinoparams'
-    paths['imgparams_fname'] = paths['param_name']+'.imgparams'
-    paths['reconparams_fname'] = paths['param_name']+'.reconparams'
-    paths['view_angle_list_fname'] = paths['param_name']+'.ViewAngleList'
-
-    paths['view_angle_list_name'] = object_name+'.ViewAngleList'
-
-    return paths
-
-
-def _transform_pyconv2c(**kwargs):
-    ckwargs=dict()
-    for key in kwargs:
-        if key in _map_pyconv2camelcase.keys():
-            ckwargs[_map_pyconv2camelcase[key]]=kwargs[key]
-        else:
-            ckwargs[key]=kwargs[key]
-    return ckwargs
-
-
-def _hash_params(angles, **kwargs):
-
-    relevant_params = dict()
-    relevant_params['Nx'] = kwargs['Nx']
-    relevant_params['Ny'] = kwargs['Ny']
-    relevant_params['delta_xy'] = kwargs['delta_xy']
-    relevant_params['roi_radius'] = kwargs['roi_radius']
-    relevant_params['num_channels'] = kwargs['num_channels']
-    relevant_params['num_views'] = kwargs['num_views']
-    relevant_params['delta_channel'] = kwargs['delta_channel']
-    relevant_params['center_offset'] = kwargs['center_offset']
-
-    hash_input = str(relevant_params)+str(np.around(angles, decimals=6) )
-
-    hash_val = hashlib.sha512(hash_input.encode()).hexdigest()
-
-    return hash_val, relevant_params
-
-
-def _cmd_exec(exec_path=__exec_path__, *args, **kwargs):
-
-    arg_list = [exec_path]
-    for key in args:
-        arg_list.append('-'+key)
-
-    for key,value in kwargs.items():
-        arg_list.append('-'+key)
-        arg_list.append(value)
-
-    # print(arg_list)
-    # os.environ['OMP_NUM_THREADS'] = '20'
-    # os.environ['OMP_DYNAMIC'] = 'true'
-    subprocess.run(arg_list)
-
-
-def _gen_sysmatrix(param_name, sysmatrix_name, verbose):
-
-    if os.path.exists(sysmatrix_name+'.2Dsvmatrix'):
-        print('Found system matrix: {}'.format(sysmatrix_name+'.2Dsvmatrix'))
-    else:
-        _cmd_exec(i=param_name, j=param_name, m=sysmatrix_name, v=str(verbose))
-
-
-def _init_geometry(angles, num_channels, num_views, num_slices, num_rows, num_cols,
-    delta_channel, delta_pixel, roi_radius, center_offset, verbose,
-    svmbir_lib_path=__svmbir_lib_path, object_name='object'):
-
-    sinoparams = dict()
-    sinoparams['geometry']= '3DPARALLEL'
-    sinoparams['num_channels'] = num_channels
-    sinoparams['num_views'] = num_views
-    sinoparams['num_slices'] = num_slices
-    sinoparams['delta_channel'] = delta_channel
-    sinoparams['center_offset'] = center_offset
-    sinoparams['delta_slice'] = 1
-    sinoparams['first_slice_number'] = 0
-    sinoparams['view_angle_list'] = object_name+'.ViewAngleList'
-
-    imgparams = dict()
-    imgparams['Nx'] = num_rows
-    imgparams['Ny'] =  num_cols
-    imgparams['Nz'] =  num_slices
-    imgparams['first_slice_number'] = 0
-    imgparams['delta_xy'] = delta_pixel
-    imgparams['delta_z'] = 1
-    imgparams['roi_radius'] = roi_radius
-=======
 import os
 import svmbir._utils as utils
 import PIL
->>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
 
 if os.environ.get('CLIB') =='CMD_LINE':
     import svmbir.interface_py_c as ci
@@ -196,9 +23,6 @@ def _svmbir_lib_path():
     return __svmbir_lib_path
 
 
-<<<<<<< HEAD
-    _gen_sysmatrix(paths['param_name'], paths['sysmatrix_name'], verbose)
-=======
 def _clear_cache(svmbir_lib_path = __svmbir_lib_path):
     """Clears the cache files used by svmbir
     
@@ -206,7 +30,6 @@ def _clear_cache(svmbir_lib_path = __svmbir_lib_path):
         svmbir_lib_path (string): Path to svmbir cache directory. Defaults to __svmbir_lib_path variable
     """
     shutil.rmtree(svmbir_lib_path)
->>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
 
 
 def calc_weights(sino, weight_type ):
@@ -308,20 +131,8 @@ def auto_sigma_x(sino, delta_channel = 1.0, sharpness = 1.0 ):
     return sigma_x
 
 
-<<<<<<< HEAD
-def recon(sino, angles,
-        center_offset=0.0, delta_channel=1.0, delta_pixel=1.0,
-        num_rows=None, num_cols=None, roi_radius=None,
-        sigma_y=None, snr_db=30.0, weights=None, weight_type='unweighted',
-        sigma_x=None, sharpen=1.0, positivity=True, p=1.2, q=2.0, T=1.0, b_interslice=1.0, 
-        init_image=0.0001, init_proj=None, prox_image=None,
-        stop_threshold=0.0, max_iterations=20,
-        num_threads=1, delete_temps=True, svmbir_lib_path=__svmbir_lib_path, object_name='object',
-        verbose=1):
-=======
 def auto_num_rows(num_channels, delta_channel, delta_pixel):
     """Computes the automatic value of ``num_rows``.
->>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
     """
     num_rows = int(np.ceil(num_channels * delta_channel / delta_pixel))
     return num_rows
@@ -434,15 +245,9 @@ def recon(sino, angles,
         object_name (string, optional): [Default='object'] Specifies filenames of cached files.
             Can be changed suitably for running multiple instances of reconstructions.
             Useful for building multi-process and multi-node functionality on top of svmbir.
-<<<<<<< HEAD
-        
-        verbose (int, optional): [Default=1] Set to 0 for quiet mode.
- 
-=======
 
         verbose (int, optional): [Default=1] Possible values are {0,1,2}, where 0 is quiet, 1 prints minimal reconstruction progress information, and 2 prints the full information.
 
->>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
     Returns:
         3D numpy array: 3D reconstruction with shape (num_slices,num_rows,num_cols) in units of :math:`ALU^{-1}`.
     """
@@ -500,28 +305,10 @@ def recon(sino, angles,
     if go_to_lower_resolution:
         new_max_resolutions = max_resolutions-1;
 
-<<<<<<< HEAD
-    paths, sinoparams, imgparams = _init_geometry(angles, center_offset=center_offset,
-        num_channels=num_channels, num_views=num_views, num_slices=num_slices, 
-        num_rows=num_rows, num_cols=num_cols, 
-        delta_channel=delta_channel, delta_pixel=delta_pixel, roi_radius=roi_radius,
-        svmbir_lib_path=svmbir_lib_path, object_name=object_name, verbose=verbose)
-
-    reconparams = parse_params(_default_reconparams, p=p, q=q, T=T, sigma_x=sigma_x, sigma_y=sigma_y,
-        b_interslice=b_interslice, stop_threshold=stop_threshold, max_iterations=max_iterations,
-        positivity=int(positivity))
-    
-    cmd_args = dict(i=paths['param_name'], j=paths['param_name'], k=paths['param_name'], 
-    s=paths['sino_name'], f=paths['proj_name'], w=paths['wght_name'],
-    r=paths['recon_name'],
-    m=paths['sysmatrix_name'],
-    t=paths['init_name'], v=str(verbose))
-=======
         # Set the pixel pitch, num_rows, and num_cols for the next lower resolution
         lr_delta_pixel = 2 * delta_pixel
         lr_num_rows = int(np.ceil(num_rows / 2))
         lr_num_cols = int(np.ceil(num_cols / 2))
->>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
 
         # Rescale sigma_y for lower resolution
         lr_sigma_y = 2.0**0.5 * sigma_y
@@ -532,17 +319,11 @@ def recon(sino, angles,
         else:
             lr_init_image = init_image
 
-<<<<<<< HEAD
-    write_sino_openmbir(sino, paths['sino_name']+'_slice', '.2Dsinodata')
-    write_sino_openmbir(weights, paths['wght_name']+'_slice', '.2Dweightdata')
-    write_recon_openmbir(init_image, paths['init_name']+'_slice', '.2Dimgdata')
-=======
         # Reduce resolution of proximal image if there is one
         if isinstance(prox_image, np.ndarray) and (prox_image.ndim == 3):
             lr_prox_image = recon_resize(prox_image, (lr_num_rows, lr_num_cols))
         else:
             lr_prox_image = prox_image
->>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
 
         if verbose >= 1:
             print(f'Calling multires_recon for axial size (rows,cols)=({lr_num_rows},{lr_num_cols}).')
@@ -580,19 +361,11 @@ def recon(sino, angles,
 
 
 def project(angles, image, num_channels,
-<<<<<<< HEAD
-        delta_channel=1.0, delta_pixel=1.0, center_offset=0.0, roi_radius=None,
-        num_threads=1, delete_temps=True, svmbir_lib_path=__svmbir_lib_path, object_name='object',
-        verbose=1):
-    """Computes the parallel beam sinogram by forward-projecting a 3D numpy array image that represents the volumetric image. 
-    
-=======
              delta_channel = 1.0, delta_pixel = 1.0, center_offset = 0.0, roi_radius = None,
              num_threads = None, delete_temps = True, svmbir_lib_path = __svmbir_lib_path, object_name = 'object',
              verbose = 1):
     """Computes 3D parallel beam forward-projection.
 
->>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
     Args:
         angles (ndarray):
             1D numpy array of view angles in radians.
@@ -623,11 +396,7 @@ def project(angles, image, num_channels,
             Can be changed suitably for running multiple instances of forward projections.
             Useful for building multi-process and multi-node functionality on top of svmbir.
         verbose (int, optional): [Default=1] Set to 0 for quiet mode.
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
     Returns:
         ndarray: 3D numpy array containing sinogram with shape (num_views, num_slices, num_channels).
     """
@@ -645,13 +414,7 @@ def project(angles, image, num_channels,
     if roi_radius is None :
         roi_radius = auto_roi_radius(delta_pixel, num_rows, num_cols)
 
-<<<<<<< HEAD
-    paths, sinoparams, imgparams = _init_geometry(angles, center_offset=center_offset,
-        num_channels=num_channels, num_views=num_views, num_slices=num_slices, 
-        num_rows=num_rows, num_cols=num_cols, 
-        delta_channel=delta_channel, delta_pixel=delta_pixel, roi_radius=roi_radius,
-        svmbir_lib_path=svmbir_lib_path, object_name=object_name, verbose=verbose)
-=======
+
     paths, sinoparams, imgparams = ci._init_geometry(angles, center_offset=center_offset,
                                                      num_channels=num_channels, num_views=num_views, num_slices=num_slices,
                                                      num_rows=num_rows, num_cols=num_cols,
@@ -659,7 +422,6 @@ def project(angles, image, num_channels,
                                                      roi_radius=roi_radius,
                                                      svmbir_lib_path=svmbir_lib_path, object_name=object_name,
                                                      verbose=verbose)
->>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
 
     # Collect settings to pass to C
     settings = dict()
@@ -668,13 +430,8 @@ def project(angles, image, num_channels,
     settings['imgparams'] = imgparams
     settings['delete_temps'] = delete_temps
 
-<<<<<<< HEAD
-    _cmd_exec(i=paths['param_name'], j=paths['param_name'], m=paths['sysmatrix_name'],
-        f=paths['proj_name'], t=paths['recon_name'], v=str(verbose))
-=======
     # Do the projection
     proj = ci.project(image, sinoparams, settings)
->>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
 
     return proj
 

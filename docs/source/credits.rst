@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-=======
-Credits
-=======
-
-We kindly request that you cite the following article(s):
-
-Wait to add.
-
-
-=======
 Credits
 =======
 
@@ -43,7 +32,6 @@ Please use the following Bibtex citation when referencing this software.
     howpublished = {Software library available from \url{https://github.com/cabouman/svmbir}},
     year = 2020
     }
->>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
 
 References
 ==========

@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-future
-scipy
-sphinx>=2.2
-numpydoc
-sphinxcontrib-bibtex
-sphinx_tabs
-sphinx_fontawesome
-pygraphviz
-jonga
-ipython>=6.3.1
-jupyter
-py2jn
-pypandoc
-numpy
-ruamel.yaml
-sphinx-rtd-theme
-nbsphinx
-=======
 scipy
 sphinx>=2.2
 sphinxcontrib-bibtex==1.0
@@ -29,4 +10,3 @@ nbsphinx
 psutil
 Pillow
 Cython
->>>>>>> bd1db18a94c00438eb2f3d35ed483f0bbae8d377
