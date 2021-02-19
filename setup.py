@@ -37,7 +37,7 @@ else:
 if os.environ.get('CLIB') !='CMD_LINE':
 
     #Check that compiler is set
-    if os.environ.get('CC') not in ['gcc','icc','clang','msvc']:
+    if os.environ.get('CC') not in ['gcc','icc','clang','msvc','gcc-10']:
         warnings.warn('CC environment variable not set to valid value. Using default CC=gcc.')
         os.environ["CC"] = 'gcc'
         #raise ValueError('CC flag not set to valid value. For example should be: CC=gcc')
