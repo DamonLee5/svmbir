@@ -12,7 +12,9 @@ matrix:
   - os: osx
     osx_image: xcode12.2
     language: generic
-    env: PYTHON=3.8
+    env:
+      - MATRIX_EVAL="brew install gcc@10 &&CC=gcc-10 && CXX=g++-10"
+      - PYTHON=3.8
 
 notifications:
   email: false
@@ -49,6 +51,7 @@ before_install:
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
     - conda info -a
+    - eval "${MATRIX_EVAL}"
 
 install:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
@@ -62,7 +65,7 @@ install:
     - if [[ "$TRAVIS_OS_NAME" != "osx" && "$TRAVIS_PYTHON_VERSION" == "3.8" ]]; then
          conda install -c conda-forge codecov;
       fi
-    - CC=gcc python setup.py build_ext --inplace
+    - python setup.py build_ext --inplace
 
 script:
     - pytest
