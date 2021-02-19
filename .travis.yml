@@ -1,0 +1,15 @@
+os: linux
+
+language: python
+
+python:
+  - "3.6"
+  - "3.7"
+  - "3.8"
+
+matrix:
+  include:
+  - os: osx
+    osx_image: xcode12.2
+    language: generic
+    env: PYTHON=3.8.5
