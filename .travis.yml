@@ -65,7 +65,12 @@ install:
     - if [[ "$TRAVIS_OS_NAME" != "osx" && "$TRAVIS_PYTHON_VERSION" == "3.8" ]]; then
          conda install -c conda-forge codecov;
       fi
-    - python setup.py build_ext --inplace
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+          CC=gcc-10 python setup.py build_ext --inplace;
+      else
+          python setup.py build_ext --inplace
+      fi;
+
 
 script:
     - pytest
