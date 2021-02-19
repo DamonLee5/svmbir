@@ -47,6 +47,10 @@ if os.environ.get('CLIB') !='CMD_LINE':
         extra_compile_args=["-std=c11","-O3","-fopenmp","-Wno-unknown-pragmas"]
         extra_link_args=["-lm","-fopenmp"]
 
+    if os.environ.get('CC') =='gcc-10':
+        extra_compile_args=["-std=c11","-O3","-fopenmp","-Wno-unknown-pragmas"]
+        extra_link_args=["-lm","-fopenmp"]
+
     if os.environ.get('CC') =='icc':
         if sys.platform == 'linux':
             os.environ['LDSHARED'] = 'icc -shared'
