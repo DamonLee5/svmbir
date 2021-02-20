@@ -72,7 +72,7 @@ install:
          conda install -c conda-forge codecov;
       fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-          if [["TRAVIS_COMPILER" == "gcc"]]; then
+          if [["CC" == "gcc-10"]]; then
             CC=gcc-10 python setup.py build_ext --inplace;
           else
             CC=clang python setup.py build_ext --inplace;
