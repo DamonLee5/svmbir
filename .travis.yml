@@ -58,6 +58,7 @@ before_install:
     - conda update -q conda
     - conda info -a
     - eval "${MATRIX_EVAL}"
+    - echo "$TRAVIS_COMPILER"
 
 install:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
