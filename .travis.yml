@@ -12,16 +12,10 @@ matrix:
   - os: osx
     osx_image: xcode12.2
     language: generic
-    complier: gcc
     env:
       - MATRIX_EVAL="brew install gcc@10 &&CC=gcc-10 && CXX=g++-10"
       - PYTHON=3.8
-  - os: osx
-    osx_image: xcode12.2
-    language: generic
-    complier: clang
-    env:
-      - PYTHON=3.8
+
 notifications:
   email: false
 
@@ -72,11 +66,7 @@ install:
          conda install -c conda-forge codecov;
       fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-          if [["$CC" =~ "gcc"]]; then
-            CC=gcc-10 python setup.py build_ext --inplace;
-          else
-            CC=clang python setup.py build_ext --inplace;
-          fi;
+          CC=gcc-10 python setup.py build_ext --inplace;
       else
           python setup.py build_ext --inplace;
       fi;
